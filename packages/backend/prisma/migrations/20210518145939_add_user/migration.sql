@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE `User` (
     `uid` VARCHAR(255) NOT NULL,
+    `displayName` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255),
     `role` ENUM('NONE', 'ADMIN') NOT NULL DEFAULT 'NONE',
-    `name` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
