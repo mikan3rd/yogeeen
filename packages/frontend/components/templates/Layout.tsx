@@ -3,7 +3,7 @@ import React from "react";
 import { css } from "@emotion/react";
 import { SemanticToastContainer } from "react-semantic-toasts";
 import TopBarProgress from "react-topbar-progress-indicator";
-import { Container, Divider } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 import { ScrollTopButton } from "@/components/atoms/ScrollTopButton";
 import { Header } from "@/components/molecules/Header";
