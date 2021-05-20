@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 
+import { UserModule } from "@/modules/user.module";
 import { DateScalar } from "@/scalars/date.scalar";
 
 @Module({
@@ -10,6 +11,7 @@ import { DateScalar } from "@/scalars/date.scalar";
     GraphQLModule.forRoot({
       autoSchemaFile: "schema.graphql",
     }),
+    UserModule,
   ],
   controllers: [],
   providers: [DateScalar],

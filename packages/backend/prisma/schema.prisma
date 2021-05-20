@@ -7,9 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// TODO
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  uid         String   @id @default(uuid()) @db.VarChar(255)
+  displayName String   @db.VarChar(255)
+  email       String?  @db.VarChar(255)
+  role        UserRole @default(NONE)
+  createdAt   DateTime @default(now()) @db.DateTime(0)
+  updatedAt   DateTime @default(now()) @updatedAt @db.DateTime(0)
+}
+
+enum UserRole {
+  NONE
+  ADMIN
 }

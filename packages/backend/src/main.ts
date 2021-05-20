@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/node";
 import { locale } from "dayjs";
 import { Request } from "express";
 import admin from "firebase-admin";
-import morgan from "morgan";
+import morgan, { token } from "morgan";
 
 import "dayjs/locale/ja";
 
@@ -33,7 +33,7 @@ async function bootstrap() {
   });
   app.useGlobalInterceptors(new SentryInterceptor());
 
-  morgan.token("graphql-query", (req: Request) => {
+  token("graphql-query", (req: Request) => {
     const { body } = req;
 
     if (!body) {
