@@ -13,10 +13,10 @@ export class UserModel {
   uid!: string;
 
   @Field()
-  name!: string;
+  displayName!: string;
 
-  @Field()
-  email!: string;
+  @Field({ nullable: true })
+  email?: string;
 
   @Field((type) => UserRoleModel)
   role!: UserRoleModel;

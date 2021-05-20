@@ -8,7 +8,7 @@ import { GqlAuthGuard } from "@/guards/gqlAuthGuard.guard";
 import { UserService } from "@/services/user.service";
 
 @Resolver()
-export class AdminResolver {
+export class UserResolver {
   constructor(@Inject(UserService) private userService: UserService) {}
 
   @Query((returns) => UserModel)

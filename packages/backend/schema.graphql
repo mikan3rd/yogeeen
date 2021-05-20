@@ -1,0 +1,24 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserModel {
+  uid: ID!
+  displayName: String!
+  email: String
+  role: UserRole!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+enum UserRole {
+  NONE
+  ADMIN
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  getCurrentUser: UserModel!
+}
