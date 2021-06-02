@@ -15,8 +15,9 @@ model User {
   createdAt   DateTime @default(now()) @db.DateTime(0)
   updatedAt   DateTime @default(now()) @updatedAt @db.DateTime(0)
 
-  themes                   Theme[]
-  selectedBoolChoiceAnswer SelectedBoolChoiceAnswer[]
+  themes                Theme[]
+  userBoolChoiceAnswers UserBoolChoiceAnswer[]
+  userChoices           UserChoice[]
 }
 
 enum UserRole {
@@ -35,28 +36,21 @@ model Theme {
   createdAt   DateTime   @default(now()) @db.DateTime(0)
   updatedAt   DateTime   @default(now()) @updatedAt @db.DateTime(0)
 
-  author                   User                       @relation(fields: [authorId], references: [uid])
-  selectedBoolChoiceAnswer SelectedBoolChoiceAnswer[]
-  boolChoiceResult         BoolChoiceResult[]
+  author                User                   @relation(fields: [authorId], references: [uid])
+  userboolChoiceAnswers UserBoolChoiceAnswer[]
+  resultBoolChoice      ResultBoolChoice?
+  answerChoices         AnswerChoice[]
+  userChoices           UserChoice[]
+  resultChoice          ResultChoice?
 }
 
 enum AnswerType {
   BOOL_CHOICE
   SINGLE_CHOICE
+  MULTI_CHOICE
 }
 
-// model ThemeSelectedBoolChoiceAnswerRelation {
-//   themeId  String                   @db.VarChar(255)
-//   answerId String                   @db.VarChar(255)
-//   theme    Theme                    @relation(fields: [themeId], references: [uuid])
-//   answer   SelectedBoolChoiceAnswer @relation(fields: [answerId], references: [uuid])
-
-//   @@id([themeId, answerId])
-//   @@index([themeId])
-//   @@index([answerId])
-// }
-
-model SelectedBoolChoiceAnswer {
+model UserBoolChoiceAnswer {
   uuid      String   @id @default(uuid()) @db.VarChar(255)
   themeId   String   @db.VarChar(255)
   userId    String   @db.VarChar(255)
@@ -68,7 +62,7 @@ model SelectedBoolChoiceAnswer {
   user  User  @relation(fields: [userId], references: [uid])
 }
 
-model BoolChoiceResult {
+model ResultBoolChoice {
   uuid       String   @id @default(uuid()) @db.VarChar(255)
   isOfficial Boolean  @db.TinyInt
   themeId    String   @db.VarChar(255)
@@ -77,4 +71,61 @@ model BoolChoiceResult {
   updatedAt  DateTime @default(now()) @updatedAt @db.DateTime(0)
 
   theme Theme @relation(fields: [themeId], references: [uuid])
+}
+
+model AnswerChoice {
+  uuid      String   @id @default(uuid()) @db.VarChar(255)
+  themeId   String   @db.VarChar(255)
+  text      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  theme               Theme                @relation(fields: [themeId], references: [uuid])
+  userChoiceAnswers   UserChoiceAnswer[]
+  resultChoiceAnswers ResultChoiceAnswer[]
+}
+
+model UserChoice {
+  uuid      String   @id @default(uuid()) @db.VarChar(255)
+  themeId   String   @db.VarChar(255)
+  userId    String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  theme             Theme              @relation(fields: [themeId], references: [uuid])
+  user              User               @relation(fields: [userId], references: [uid])
+  userChoiceAnswers UserChoiceAnswer[]
+}
+
+model UserChoiceAnswer {
+  uuid            String   @id @default(uuid()) @db.VarChar(255)
+  choiceUserId    String   @db.VarChar(255)
+  choiceAnsewerId String   @db.VarChar(255)
+  createdAt       DateTime @default(now()) @db.DateTime(0)
+  updatedAt       DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  userChoice   UserChoice   @relation(fields: [choiceUserId], references: [uuid])
+  answerChoice AnswerChoice @relation(fields: [choiceAnsewerId], references: [uuid])
+}
+
+model ResultChoice {
+  uuid       String   @id @default(uuid()) @db.VarChar(255)
+  isOfficial Boolean  @db.TinyInt
+  themeId    String   @db.VarChar(255)
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  updatedAt  DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  theme               Theme                @relation(fields: [themeId], references: [uuid])
+  resultChoiceAnswers ResultChoiceAnswer[]
+}
+
+model ResultChoiceAnswer {
+  uuid            String   @id @default(uuid()) @db.VarChar(255)
+  choiceResultId  String   @db.VarChar(255)
+  choiceAnsewerId String   @db.VarChar(255)
+  createdAt       DateTime @default(now()) @db.DateTime(0)
+  updatedAt       DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  resultChoice ResultChoice @relation(fields: [choiceResultId], references: [uuid])
+  answerChoice AnswerChoice @relation(fields: [choiceAnsewerId], references: [uuid])
 }
