@@ -8,15 +8,73 @@ datasource db {
 }
 
 model User {
-  uid         String   @id @default(uuid()) @db.VarChar(255)
+  uid         String   @id @db.VarChar(255)
   displayName String   @db.VarChar(255)
   email       String?  @db.VarChar(255)
   role        UserRole @default(NONE)
   createdAt   DateTime @default(now()) @db.DateTime(0)
   updatedAt   DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  themes                   Theme[]
+  selectedBoolChoiceAnswer SelectedBoolChoiceAnswer[]
 }
 
 enum UserRole {
   NONE
   ADMIN
+}
+
+model Theme {
+  uuid        String     @id @default(uuid()) @db.VarChar(255)
+  title       String     @unique @db.VarChar(255)
+  description String     @db.Text
+  isOfficial  Boolean    @db.TinyInt
+  answerType  AnswerType
+  authorId    String     @db.VarChar(255)
+  deadline    DateTime   @db.DateTime(0)
+  createdAt   DateTime   @default(now()) @db.DateTime(0)
+  updatedAt   DateTime   @default(now()) @updatedAt @db.DateTime(0)
+
+  author                   User                       @relation(fields: [authorId], references: [uid])
+  selectedBoolChoiceAnswer SelectedBoolChoiceAnswer[]
+  boolChoiceResult         BoolChoiceResult[]
+}
+
+enum AnswerType {
+  BOOL_CHOICE
+  SINGLE_CHOICE
+}
+
+// model ThemeSelectedBoolChoiceAnswerRelation {
+//   themeId  String                   @db.VarChar(255)
+//   answerId String                   @db.VarChar(255)
+//   theme    Theme                    @relation(fields: [themeId], references: [uuid])
+//   answer   SelectedBoolChoiceAnswer @relation(fields: [answerId], references: [uuid])
+
+//   @@id([themeId, answerId])
+//   @@index([themeId])
+//   @@index([answerId])
+// }
+
+model SelectedBoolChoiceAnswer {
+  uuid      String   @id @default(uuid()) @db.VarChar(255)
+  themeId   String   @db.VarChar(255)
+  userId    String   @db.VarChar(255)
+  result    Boolean  @db.TinyInt
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  theme Theme @relation(fields: [themeId], references: [uuid])
+  user  User  @relation(fields: [userId], references: [uid])
+}
+
+model BoolChoiceResult {
+  uuid       String   @id @default(uuid()) @db.VarChar(255)
+  isOfficial Boolean  @db.TinyInt
+  themeId    String   @db.VarChar(255)
+  result     Boolean  @db.TinyInt
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  updatedAt  DateTime @default(now()) @updatedAt @db.DateTime(0)
+
+  theme Theme @relation(fields: [themeId], references: [uuid])
 }
