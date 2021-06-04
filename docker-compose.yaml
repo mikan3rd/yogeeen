@@ -3,7 +3,7 @@ version: "3"
 x-dev-base: &dev-base
   build: .
   environment:
-    DATABASE_URL: mysql://docker:docker@mysql:3306/e_mirai
+    DATABASE_URL: mysql://docker:docker@mysql:3306/yogeeen
     SERVER_APOLLO_URI: http://backend:3300
     PUBLIC_APOLLO_URI: http://localhost:3300
     TZ: Asia/Tokyo
@@ -22,7 +22,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
-      MYSQL_DATABASE: e_mirai
+      MYSQL_DATABASE: yogeeen
       TZ: 'Asia/Tokyo'
     ports:
       - 4306:3306
