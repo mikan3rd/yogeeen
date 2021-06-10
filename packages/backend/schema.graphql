@@ -25,7 +25,7 @@ scalar Date
 
 type UserModel {
   uid: ID!
-  displayName: String!
+  displayName: String
   email: String
   role: UserRole!
   createdAt: Date!

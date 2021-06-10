@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `User` (
     `uid` VARCHAR(255) NOT NULL,
-    `displayName` VARCHAR(255) NOT NULL,
+    `displayName` VARCHAR(255),
     `email` VARCHAR(255),
     `role` ENUM('NONE', 'ADMIN') NOT NULL DEFAULT 'NONE',
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
@@ -23,6 +23,7 @@ CREATE TABLE `Theme` (
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
     UNIQUE INDEX `Theme.title_unique`(`title`),
+    INDEX `authorId`(`authorId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -35,6 +36,8 @@ CREATE TABLE `UserBoolChoiceAnswer` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
+    INDEX `themeId`(`themeId`),
+    INDEX `userId`(`userId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -47,7 +50,7 @@ CREATE TABLE `ResultBoolChoice` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
-    UNIQUE INDEX `ResultBoolChoice_themeId_unique`(`themeId`),
+    UNIQUE INDEX `ResultBoolChoice.themeId_unique`(`themeId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -59,6 +62,7 @@ CREATE TABLE `AnswerChoice` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
+    INDEX `themeId`(`themeId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -70,6 +74,8 @@ CREATE TABLE `UserChoice` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
+    INDEX `themeId`(`themeId`),
+    INDEX `userId`(`userId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -81,6 +87,8 @@ CREATE TABLE `UserChoiceAnswer` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
+    INDEX `choiceAnsewerId`(`choiceAnsewerId`),
+    INDEX `choiceUserId`(`choiceUserId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -92,7 +100,7 @@ CREATE TABLE `ResultChoice` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
-    UNIQUE INDEX `ResultChoice_themeId_unique`(`themeId`),
+    UNIQUE INDEX `ResultChoice.themeId_unique`(`themeId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
@@ -104,35 +112,10 @@ CREATE TABLE `ResultChoiceAnswer` (
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
+    INDEX `choiceAnsewerId`(`choiceAnsewerId`),
+    INDEX `choiceResultId`(`choiceResultId`),
     PRIMARY KEY (`uuid`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-
--- AddForeignKey
-ALTER TABLE `UserChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `UserChoice` ADD FOREIGN KEY (`userId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `AnswerChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `ResultBoolChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `UserChoiceAnswer` ADD FOREIGN KEY (`choiceUserId`) REFERENCES `UserChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `UserChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `AnswerChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceResultId`) REFERENCES `ResultChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `AnswerChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Theme` ADD FOREIGN KEY (`authorId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `UserBoolChoiceAnswer` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -141,4 +124,31 @@ ALTER TABLE `UserBoolChoiceAnswer` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme
 ALTER TABLE `UserBoolChoiceAnswer` ADD FOREIGN KEY (`userId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `ResultBoolChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `AnswerChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceResultId`) REFERENCES `ResultChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `UserChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `UserChoice` ADD FOREIGN KEY (`userId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `UserChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `AnswerChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `UserChoiceAnswer` ADD FOREIGN KEY (`choiceUserId`) REFERENCES `UserChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Theme` ADD FOREIGN KEY (`authorId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `ResultChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `AnswerChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;

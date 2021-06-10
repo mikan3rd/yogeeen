@@ -12,8 +12,8 @@ export class UserModel {
   @Field((type) => ID)
   uid!: string;
 
-  @Field()
-  displayName!: string;
+  @Field({ nullable: true })
+  displayName?: string;
 
   @Field({ nullable: true })
   email?: string;
