@@ -16,13 +16,46 @@ export type Scalars = {
   Date: number;
 };
 
+export enum AnswerType {
+  BoolChoice = "BOOL_CHOICE",
+  SingleChoice = "SINGLE_CHOICE",
+  MultiChoice = "MULTI_CHOICE",
+}
+
+export type Mutation = {
+  createTheme: ThemeModel;
+};
+
+export type MutationCreateThemeArgs = {
+  theme: ThemeCreateInput;
+};
+
 export type Query = {
   getCurrentUser: UserModel;
 };
 
+export type ThemeCreateInput = {
+  title: Scalars["String"];
+  description: Scalars["String"];
+  answerType: AnswerType;
+  deadline: Scalars["Date"];
+};
+
+export type ThemeModel = {
+  uuid: Scalars["ID"];
+  title: Scalars["String"];
+  description: Scalars["String"];
+  isOfficial: Scalars["Boolean"];
+  answerType: AnswerType;
+  authorId: Scalars["ID"];
+  deadline: Scalars["Date"];
+  createdAt: Scalars["Date"];
+  updatedAt: Scalars["Date"];
+};
+
 export type UserModel = {
   uid: Scalars["ID"];
-  displayName: Scalars["String"];
+  displayName?: Maybe<Scalars["String"]>;
   email?: Maybe<Scalars["String"]>;
   role: UserRole;
   createdAt: Scalars["Date"];

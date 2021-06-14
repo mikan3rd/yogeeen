@@ -1,4 +1,4 @@
-import { Field, ID, InputType } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 
 import { AnswerTypeModel } from "@/dto/models/theme.model";
 
@@ -10,14 +10,8 @@ export class ThemeCreateInput {
   @Field()
   description!: string;
 
-  @Field()
-  isOfficial!: boolean;
-
   @Field((type) => AnswerTypeModel)
   answerType!: AnswerTypeModel;
-
-  @Field((type) => ID)
-  authorId!: string;
 
   @Field()
   deadline!: Date;

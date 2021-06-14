@@ -111,7 +111,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     dispatch({ type: "SetAuthStatus", payload: "loading" });
 
     firebase.auth().onAuthStateChanged(async (currentUser) => {
-      console.log({ currentUser });
       dispatch({ type: "SetFirebaseUser", payload: currentUser });
 
       if (currentUser) {

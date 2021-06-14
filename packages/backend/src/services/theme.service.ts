@@ -11,7 +11,7 @@ export class ThemeService {
   async createTheme(data: { user: User; theme: ThemeCreateInput }) {
     const { user, theme } = data;
     return await this.prisma.theme.create({
-      data: { ...theme, authorId: user.uid },
+      data: { ...theme, authorId: user.uid, isOfficial: user.role === "ADMIN" },
     });
   }
 }

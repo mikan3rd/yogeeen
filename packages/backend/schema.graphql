@@ -48,8 +48,6 @@ type Mutation {
 input ThemeCreateInput {
   title: String!
   description: String!
-  isOfficial: Boolean!
   answerType: AnswerType!
-  authorId: ID!
   deadline: Date!
 }
