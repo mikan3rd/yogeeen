@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 
+import { ThemeModule } from "@/modules/theme.module";
 import { UserModule } from "@/modules/user.module";
 import { DateScalar } from "@/scalars/date.scalar";
 
@@ -12,6 +13,7 @@ import { DateScalar } from "@/scalars/date.scalar";
       autoSchemaFile: "schema.graphql",
     }),
     UserModule,
+    ThemeModule,
   ],
   controllers: [],
   providers: [DateScalar],

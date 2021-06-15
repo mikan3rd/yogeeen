@@ -6,7 +6,7 @@ export const Meta = React.memo<{
   title: string;
   description?: string;
 }>(({ title, description = "" }) => {
-  const titleWithSiteName = `${title} | e-Mirai （イーミライ）`;
+  const titleWithSiteName = `${title} | Yogeeen （ヨゲーン）`;
   return (
     <Head>
       <title>{titleWithSiteName}</title>

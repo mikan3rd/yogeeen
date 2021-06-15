@@ -27,10 +27,10 @@ export class GqlAuthGuard implements CanActivate {
       });
 
     const { uid } = decodedIdToken;
-    const user = await this.userService.getUser(uid);
+    let user = await this.userService.getUser(uid);
 
     if (!user) {
-      throw new UnauthorizedException();
+      user = await this.userService.upsertUser({ uid });
     }
 
     ctx.user = user;

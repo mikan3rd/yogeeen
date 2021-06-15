@@ -3,7 +3,8 @@ import React from "react";
 import { ApolloProvider } from "@apollo/client";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import { locale } from "dayjs";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { AppProps } from "next/app";
 import { polyfill } from "smoothscroll-polyfill";
 
@@ -12,10 +13,12 @@ import { AuthProvider } from "@/context/auth";
 import { client } from "@/graphql/client";
 
 import "dayjs/locale/ja";
+import "moment/locale/ja";
 import "semantic-ui-css/semantic.min.css";
 import "react-semantic-toasts/styles/react-semantic-alert.css";
 
-locale("ja");
+dayjs.locale("ja");
+dayjs.extend(customParseFormat);
 
 if (typeof window !== "undefined") {
   polyfill();

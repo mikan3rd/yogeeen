@@ -2,9 +2,30 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ThemeModel {
+  uuid: ID!
+  title: String!
+  description: String!
+  isOfficial: Boolean!
+  answerType: AnswerType!
+  authorId: ID!
+  deadline: Date!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+enum AnswerType {
+  BOOL_CHOICE
+  SINGLE_CHOICE
+  MULTI_CHOICE
+}
+
+"""Date custom scalar type"""
+scalar Date
+
 type UserModel {
   uid: ID!
-  displayName: String!
+  displayName: String
   email: String
   role: UserRole!
   createdAt: Date!
@@ -16,9 +37,17 @@ enum UserRole {
   ADMIN
 }
 
-"""Date custom scalar type"""
-scalar Date
-
 type Query {
   getCurrentUser: UserModel!
+}
+
+type Mutation {
+  createTheme(theme: ThemeCreateInput!): ThemeModel!
+}
+
+input ThemeCreateInput {
+  title: String!
+  description: String!
+  answerType: AnswerType!
+  deadline: Date!
 }

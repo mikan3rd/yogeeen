@@ -47,7 +47,8 @@ export const AuthContext =
     | {
         state: State;
         dispatch: React.Dispatch<Action>;
-        login: () => void;
+        loginWithGoogle: () => void;
+        loginWithTwitter: () => void;
         logout: () => void;
       }
     | undefined
@@ -59,6 +60,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     firebaseUser: null,
     currentUser: null,
   });
+  const { firebaseUser } = state;
 
   const logout = React.useCallback(async (withToast = true) => {
     await firebase.auth().signOut();
@@ -77,10 +79,13 @@ export const AuthProvider: React.FC = ({ children }) => {
   const handleCompleteCurrentUser = React.useCallback((data: GetCurrentUserQuery) => {
     dispatch({ type: "SetCurrentUser", payload: data.getCurrentUser });
     dispatch({ type: "SetAuthStatus", payload: "completed" });
-    toast({
-      type: "success",
-      title: "ログインしました！",
-    });
+
+    if (data.getCurrentUser.role !== "NONE") {
+      toast({
+        type: "success",
+        title: "ログインしました！",
+      });
+    }
   }, []);
 
   const handleErrorCurrentUser = React.useCallback(
@@ -113,22 +118,45 @@ export const AuthProvider: React.FC = ({ children }) => {
         localStorage.setItem("token", idToken);
         fetchCurrentUser();
       } else {
-        dispatch({ type: "SetAuthStatus", payload: "completed" });
+        await firebase.auth().signInAnonymously();
       }
     });
   }, [fetchCurrentUser]);
 
-  const login = React.useCallback(async () => {
+  const loginWithGoogle = React.useCallback(async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithPopup(provider);
+    const credential = await firebaseUser?.linkWithPopup(provider);
+
+    if (credential) {
+      // TODO: 初回のみ displayName, email, role を更新
+    }
+
     await setCurrentUser();
-  }, [setCurrentUser]);
+  }, [setCurrentUser, firebaseUser]);
+
+  const loginWithTwitter = React.useCallback(async () => {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    provider.setCustomParameters({ force_login: true });
+    await firebase.auth().signInWithPopup(provider);
+    const credential = await firebaseUser?.linkWithPopup(provider);
+
+    if (credential) {
+      // TODO: 初回のみ displayName, email, role を更新
+    }
+
+    await setCurrentUser();
+  }, [setCurrentUser, firebaseUser]);
 
   React.useEffect(() => {
     setCurrentUser();
   }, [setCurrentUser]);
 
-  return <AuthContext.Provider value={{ state, dispatch, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ state, dispatch, loginWithGoogle, loginWithTwitter, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuthContext = () => {
