@@ -1,0 +1,8 @@
+mutation createTheme($theme: ThemeCreateInput!) {
+  createTheme(theme: $theme) {
+    title
+    description
+    answerType
+    deadline
+  }
+}

@@ -24,7 +24,7 @@ const AnswerTypeOptions: { value: AnswerType; text: string; description: string 
 ];
 
 export const CreateThemePage: React.VFC = () => {
-  const { title, description, answerType, deadline, dispatch } = useCreateTheme();
+  const { title, description, answerType, deadline, isValid, dispatch, handleCreateTheme } = useCreateTheme();
   return (
     <div>
       <Segment>
@@ -76,6 +76,8 @@ export const CreateThemePage: React.VFC = () => {
               disableMinute
             />
           </Form.Field>
+
+          <Form.Button content="予言のテーマを作成" color="blue" disabled={!isValid} onClick={handleCreateTheme} />
         </Form>
       </Segment>
     </div>

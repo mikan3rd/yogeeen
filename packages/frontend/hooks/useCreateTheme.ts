@@ -1,9 +1,9 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useCallback, useMemo, useReducer } from "react";
 
 import dayjs from "dayjs";
 import { produce } from "immer";
 
-import { AnswerType } from "@/graphql/generated";
+import { AnswerType, useCreateThemeMutation } from "@/graphql/generated";
 
 type State = {
   title: string;
@@ -54,7 +54,12 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 export const useCreateTheme = () => {
   const [{ title, description, answerType, deadline }, dispatch] = useReducer(reducer, initialState);
 
-  const validate = useCallback(() => {
+  const [createTheme, { loading }] = useCreateThemeMutation();
+
+  const isValid = useMemo(() => {
+    if (loading) {
+      return false;
+    }
     if (title.length === 0) {
       return false;
     }
@@ -62,13 +67,22 @@ export const useCreateTheme = () => {
       return false;
     }
     return true;
-  }, [description, title]);
+  }, [description, loading, title]);
+
+  const handleCreateTheme = useCallback(async () => {
+    if (isValid) {
+      await createTheme({ variables: { theme: { title, description, answerType, deadline: deadline.unix() } } });
+      dispatch({ type: "initialize" });
+    }
+  }, [answerType, createTheme, deadline, description, isValid, title]);
 
   return {
     title,
     description,
     answerType,
     deadline,
+    isValid,
     dispatch,
+    handleCreateTheme,
   };
 };
