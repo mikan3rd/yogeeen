@@ -32,6 +32,9 @@ export class ThemeModel {
   deadline!: Date;
 
   @Field()
+  announcementDate!: Date;
+
+  @Field()
   createdAt!: Date;
 
   @Field()

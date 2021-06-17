@@ -39,6 +39,7 @@ export type ThemeCreateInput = {
   description: Scalars["String"];
   answerType: AnswerType;
   deadline: Scalars["Date"];
+  announcementDate: Scalars["Date"];
 };
 
 export type ThemeModel = {
@@ -49,6 +50,7 @@ export type ThemeModel = {
   answerType: AnswerType;
   authorId: Scalars["ID"];
   deadline: Scalars["Date"];
+  announcementDate: Scalars["Date"];
   createdAt: Scalars["Date"];
   updatedAt: Scalars["Date"];
 };
@@ -72,7 +74,7 @@ export type CreateThemeMutationVariables = Exact<{
 }>;
 
 export type CreateThemeMutation = {
-  createTheme: Pick<ThemeModel, "title" | "description" | "answerType" | "deadline">;
+  createTheme: Pick<ThemeModel, "title" | "description" | "answerType" | "deadline" | "announcementDate">;
 };
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
@@ -88,6 +90,7 @@ export const CreateThemeDocument = gql`
       description
       answerType
       deadline
+      announcementDate
     }
   }
 `;

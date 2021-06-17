@@ -19,6 +19,7 @@ CREATE TABLE `Theme` (
     `answerType` ENUM('BOOL_CHOICE', 'SINGLE_CHOICE', 'MULTI_CHOICE') NOT NULL,
     `authorId` VARCHAR(255) NOT NULL,
     `deadline` DATETIME(0) NOT NULL,
+    `announcementDate` DATETIME(0) NOT NULL,
     `createdAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updatedAt` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
@@ -118,6 +119,9 @@ CREATE TABLE `ResultChoiceAnswer` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 -- AddForeignKey
+ALTER TABLE `Theme` ADD FOREIGN KEY (`authorId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `UserBoolChoiceAnswer` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -127,10 +131,7 @@ ALTER TABLE `UserBoolChoiceAnswer` ADD FOREIGN KEY (`userId`) REFERENCES `User`(
 ALTER TABLE `ResultBoolChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `AnswerChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceResultId`) REFERENCES `ResultChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `AnswerChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `UserChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -145,10 +146,10 @@ ALTER TABLE `UserChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `A
 ALTER TABLE `UserChoiceAnswer` ADD FOREIGN KEY (`choiceUserId`) REFERENCES `UserChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Theme` ADD FOREIGN KEY (`authorId`) REFERENCES `User`(`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `ResultChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `AnswerChoice` ADD FOREIGN KEY (`themeId`) REFERENCES `Theme`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceAnsewerId`) REFERENCES `AnswerChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ResultChoiceAnswer` ADD FOREIGN KEY (`choiceResultId`) REFERENCES `ResultChoice`(`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
