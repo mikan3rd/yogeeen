@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useReducer } from "react";
 
 import dayjs from "dayjs";
 import { produce } from "immer";
+import { useRouter } from "next/router";
 
 import { AnswerType, useCreateThemeMutation } from "@/graphql/generated";
 
@@ -63,6 +64,8 @@ export const useCreateTheme = () => {
 
   const [createTheme, { loading }] = useCreateThemeMutation();
 
+  const router = useRouter();
+
   const isValid = useMemo(() => {
     if (loading) {
       return false;
@@ -90,8 +93,9 @@ export const useCreateTheme = () => {
         },
       });
       dispatch({ type: "initialize" });
+      await router.push({ pathname: "/" });
     }
-  }, [announcementDate, answerType, createTheme, deadline, description, isValid, title]);
+  }, [announcementDate, answerType, createTheme, deadline, description, isValid, router, title]);
 
   return {
     title,
