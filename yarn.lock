@@ -10166,7 +10166,7 @@ scuid@^1.1.0:
   resolved "https://registry.yarnpkg.com/scuid/-/scuid-1.1.0.tgz#d3f9f920956e737a60f72d0e4ad280bf324d5dab"
   integrity sha512-MuCAyrGZcTLfQoH2XoBlQ8C6bzwN88XT/0slOGz0pn8+gIP85BOAfYa44ZXQUTOwRwPU0QvgU+V+OSajl/59Xg==
 
-semantic-ui-calendar-react@^0.15.3:
+semantic-ui-calendar-react@0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/semantic-ui-calendar-react/-/semantic-ui-calendar-react-0.15.3.tgz#eb25826076a2967d9bb04e0567824366f5eb6fe4"
   integrity sha512-cXlg/dJf0z/dydnol1GCy9ssccXBAGYhmka9W2KNXqqW+B0mgPhu6ugWOjGD4i99e3dnNl1QVqYvQpQcpkcEIg==
