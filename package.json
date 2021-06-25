@@ -19,20 +19,20 @@
   "dependencies": {
     "@apollo/client": "3.3.20",
     "@prisma/client": "2.25.0",
-    "@sentry/node": "6.7.1",
-    "@sentry/react": "6.7.1",
-    "@sentry/tracing": "6.7.1",
+    "@sentry/node": "6.7.2",
+    "@sentry/react": "6.7.2",
+    "@sentry/tracing": "6.7.2",
     "@sentry/webpack-plugin": "1.15.1",
     "dayjs": "1.10.5",
     "firebase": "8.6.8",
-    "firebase-admin": "9.9.0",
-    "graphql": "15.5.0"
+    "firebase-admin": "9.10.0",
+    "graphql": "15.5.1"
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "11.2.0",
-    "@types/node": "14.17.3",
-    "@typescript-eslint/eslint-plugin": "4.27.0",
-    "@typescript-eslint/parser": "4.27.0",
+    "@types/node": "14.17.4",
+    "@typescript-eslint/eslint-plugin": "4.28.0",
+    "@typescript-eslint/parser": "4.28.0",
     "dotenv": "8.6.0",
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
