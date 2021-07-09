@@ -17,22 +17,22 @@
     "codegen": "yarn frontend codegen && yarn eslint ./packages/frontend/graphql --fix"
   },
   "dependencies": {
-    "@apollo/client": "3.3.20",
+    "@apollo/client": "3.3.21",
     "@prisma/client": "2.26.0",
     "@sentry/node": "6.8.0",
     "@sentry/react": "6.8.0",
     "@sentry/tracing": "6.8.0",
-    "@sentry/webpack-plugin": "1.15.1",
-    "dayjs": "1.10.5",
-    "firebase": "8.7.0",
+    "@sentry/webpack-plugin": "1.16.0",
+    "dayjs": "1.10.6",
+    "firebase": "8.7.1",
     "firebase-admin": "9.10.0",
     "graphql": "15.5.1"
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "11.2.0",
-    "@types/node": "14.17.4",
-    "@typescript-eslint/eslint-plugin": "4.28.1",
-    "@typescript-eslint/parser": "4.28.1",
+    "@types/node": "14.17.5",
+    "@typescript-eslint/eslint-plugin": "4.28.2",
+    "@typescript-eslint/parser": "4.28.2",
     "dotenv": "8.6.0",
     "eslint": "7.30.0",
     "eslint-config-prettier": "8.3.0",
@@ -46,7 +46,7 @@
     "globby": "11.0.4",
     "prettier": "2.3.2",
     "ts-node": "9.1.1",
-    "tsconfig-paths": "3.9.0",
+    "tsconfig-paths": "3.10.1",
     "typescript": "4.3.5"
   },
   "lint-staged": {
