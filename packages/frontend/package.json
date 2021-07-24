@@ -10,7 +10,7 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "resolutions": {
-    "@types/react": "17.0.14"
+    "@types/react": "17.0.15"
   },
   "dependencies": {
     "@apollo/client": "3.3.21",
