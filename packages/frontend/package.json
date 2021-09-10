@@ -10,13 +10,13 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "resolutions": {
-    "@types/react": "17.0.19"
+    "@types/react": "17.0.20"
   },
   "dependencies": {
     "@apollo/client": "3.4.10",
     "@emotion/babel-preset-css-prop": "11.2.0",
     "@emotion/react": "11.4.1",
-    "graphql": "15.5.2",
+    "graphql": "15.5.3",
     "immer": "9.0.6",
     "next": "10.2.3",
     "react": "17.0.2",
