@@ -15,4 +15,7 @@ export class ThemeCreateInput {
 
   @Field()
   deadline!: Date;
+
+  @Field()
+  announcementDate!: Date;
 }

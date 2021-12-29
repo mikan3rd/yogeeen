@@ -4,5 +4,6 @@ mutation createTheme($theme: ThemeCreateInput!) {
     description
     answerType
     deadline
+    announcementDate
   }
 }

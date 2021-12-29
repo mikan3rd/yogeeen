@@ -16,15 +16,16 @@ const AnswerTypeOptions: { value: AnswerType; text: string; description: string 
     text: "YES or NO",
     description: "2つの選択肢の中から片方を選ぶ方法",
   },
-  {
-    value: AnswerType.SingleChoice,
-    text: "1つ選択",
-    description: "複数の選択肢の中から1つだけ選択する方法",
-  },
+  // {
+  //   value: AnswerType.SingleChoice,
+  //   text: "1つ選択",
+  //   description: "複数の選択肢の中から1つだけ選択する方法",
+  // },
 ];
 
 export const CreateThemePage: React.VFC = () => {
-  const { title, description, answerType, deadline, isValid, dispatch, handleCreateTheme } = useCreateTheme();
+  const { title, description, answerType, deadline, announcementDate, isValid, dispatch, handleCreateTheme } =
+    useCreateTheme();
   return (
     <div>
       <Segment>
@@ -34,7 +35,9 @@ export const CreateThemePage: React.VFC = () => {
             <Message content="予言してほしいテーマのタイトルを記入してください" size="mini" />
             <Form.Input value={title} onChange={(e) => dispatch({ type: "setTitle", payload: e.target.value })} />
           </Form.Field>
+
           <Divider />
+
           <Form.Field>
             <label>説明</label>
             <Message content="予言してほしいテーマの詳細を記入してください" size="mini" />
@@ -43,7 +46,9 @@ export const CreateThemePage: React.VFC = () => {
               onChange={(e) => dispatch({ type: "setDescription", payload: e.target.value })}
             />
           </Form.Field>
+
           <Divider />
+
           <Form.Field>
             <label>予言方法</label>
             <Message content="予言の回答方法を選択してください" size="mini" />
@@ -53,7 +58,9 @@ export const CreateThemePage: React.VFC = () => {
               onChange={(e, d) => dispatch({ type: "setAnswerType", payload: d.value as AnswerType })}
             />
           </Form.Field>
+
           <Divider />
+
           <Form.Field>
             <label>予言締切日時</label>
             <Message content="予言締切日時を過ぎると予言ができなくなります" size="mini" />
@@ -72,6 +79,37 @@ export const CreateThemePage: React.VFC = () => {
               localization="ja"
               onChange={(e, d) => {
                 dispatch({ type: "setDeadline", payload: deadline.hour(dayjs(d.value, TimeFormat).hour()) });
+              }}
+              disableMinute
+            />
+          </Form.Field>
+
+          <Divider />
+
+          <Form.Field>
+            <label>予言結果発表予定日</label>
+            <Message content="予言の結果発表ができる予定の日を指定してください" size="mini" />
+            <DateInput
+              inline
+              dateFormat={DateFormat}
+              value={announcementDate.format(DateFormat)}
+              localization="ja"
+              onChange={(e, d) =>
+                dispatch({
+                  type: "setAnnouncementDate",
+                  payload: dayjs(d.value, DateFormat).hour(announcementDate.hour()),
+                })
+              }
+            />
+            <TimeInput
+              inline
+              value={announcementDate.format(TimeFormat)}
+              localization="ja"
+              onChange={(e, d) => {
+                dispatch({
+                  type: "setAnnouncementDate",
+                  payload: announcementDate.hour(dayjs(d.value, TimeFormat).hour()),
+                });
               }}
               disableMinute
             />
