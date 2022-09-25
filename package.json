@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": "14"
+    "node": "16"
   },
   "scripts": {
     "backend": "yarn workspace backend",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@emotion/eslint-plugin": "11.5.0",
-    "@types/node": "14.17.32",
+    "@types/node": "16.11.60",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
     "dotenv": "8.6.0",
